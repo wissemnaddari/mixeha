@@ -16,8 +16,10 @@ def webhook():
 
         if mode == 'subscribe' and token == VERIFY_TOKEN:
             return challenge, 200
-        else:
+        elif mode or token or challenge:
             return 'Verification token mismatch', 403
+        else:
+            return 'Webhook is live and ready to receive POST requests from Facebook!', 200
 
     if request.method == "POST":
         data = request.get_json()
