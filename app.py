@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-# 🔒 بدّلهم بالمعلومات الحقيقية متاعك
+
 VERIFY_TOKEN = "uAhfHg9zcm9gHk3"
 PAGE_ACCESS_TOKEN = "EAAKWPfYeZCaoBPAZC79fz7h8ybLZCJm76XNXp50dTHN4r0TXu9RU6EKHV0esgW9uu8WcBPlTfomdCrk9qZAWLZB8PlwXbZC2aAxw4iZBAXtRrVhrhaUm4dTEOlytqFQz06t8folw2QZCjLjgXDnZCUAku5fXXJtWzX9lGRtLZCG4DdzGcww1NsbbRZAAvZA5dNEErM4He0aIlVk8gZCdqFc5AFZCG1eQZDZD"  
 
@@ -31,7 +31,7 @@ def get_tunisian_reply(message_text):
     else:
         return f"ما فهمتش سؤالك 😅 أما تنجم تلقى كل شي في موقعنا: {SITE_URL}"
 
-# 🛂 Verification (GET)
+
 @app.route("/", methods=["GET"])
 def verify():
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.verify_token") == VERIFY_TOKEN:
