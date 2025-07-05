@@ -8,7 +8,15 @@ PAGE_ACCESS_TOKEN = "EAAKWPfYeZCaoBPAZC79fz7h8ybLZCJm76XNXp50dTHN4r0TXu9RU6EKHV0
 SITE_URL = "https://tonsite.tn"
 
 @app.route("/", methods=["GET"])
-def home():
+def handle_get():
+    mode = request.args.get("hub.mode")
+    token = request.args.get("hub.verify_token")
+    challenge = request.args.get("hub.challenge")
+
+    if mode == "subscribe" and token == VERIFY_TOKEN:
+        print("✅ Webhook verified")
+        return challenge, 200
+
     return """
     <h3>👋 Welcome to Mixeha Bot Webhook</h3>
     <p>This endpoint is running and ready to receive messages from Facebook Messenger.</p>
@@ -31,18 +39,6 @@ def webhook():
                     send_message(sender_id, reply)
 
     return "ok", 200
-
-@app.route("/", methods=["GET"])
-def verify():
-    mode = request.args.get("hub.mode")
-    token = request.args.get("hub.verify_token")
-    challenge = request.args.get("hub.challenge")
-
-    if mode == "subscribe" and token == VERIFY_TOKEN:
-        print("✅ Webhook verified")
-        return challenge, 200
-    else:
-        return "Unauthorized", 403
 
 def send_message(recipient_id, message_text):
     url = "https://graph.facebook.com/v17.0/me/messages"
