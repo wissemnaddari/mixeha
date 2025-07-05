@@ -3,12 +3,9 @@ import requests
 
 app = Flask(__name__)
 
-
 VERIFY_TOKEN = "uAhfHg9zcm9gHk3"
-PAGE_ACCESS_TOKEN = "EAAKWPfYeZCaoBPAZC79fz7h8ybLZCJm76XNXp50dTHN4r0TXu9RU6EKHV0esgW9uu8WcBPlTfomdCrk9qZAWLZB8PlwXbZC2aAxw4iZBAXtRrVhrhaUm4dTEOlytqFQz06t8folw2QZCjLjgXDnZCUAku5fXXJtWzX9lGRtLZCG4DdzGcww1NsbbRZAAvZA5dNEErM4He0aIlVk8gZCdqFc5AFZCG1eQZDZD"  
-
-
-SITE_URL = "https://tonsite.tn"  
+PAGE_ACCESS_TOKEN = "EAAKWPfYeZCaoBPAZC79fz7h8ybLZCJm76XNXp50dTHN4r0TXu9RU6EKHV0esgW9uu8WcBPlTfomdCrk9qZAWLZB8PlwXbZC2aAxw4iZBAXtRrVhrhaUm4dTEOlytqFQz06t8folw2QZCjLjgXDnZCUAku5fXXJtWzX9lGRtLZCG4DdzGcww1NsbbRZAAvZA5dNEErM4He0aIlVk8gZCdqFc5AFZCG1eQZDZD"
+SITE_URL = "https://tonsite.tn"
 
 def get_tunisian_reply(message_text):
     text = message_text.lower()
@@ -36,9 +33,12 @@ def get_tunisian_reply(message_text):
 def verify():
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.verify_token") == VERIFY_TOKEN:
         return request.args.get("hub.challenge")
-    return "Unauthorized", 403
+    return """
+        <h1>👋 Welcome to Mixeha Bot Webhook</h1>
+        <p>This endpoint is running and ready to receive messages from Facebook Messenger.</p>
+        <p>If you see this page, the bot is deployed correctly ✅</p>
+    """, 200
 
-# 📩 Receive Message (POST)
 @app.route("/", methods=["POST"])
 def webhook():
     data = request.get_json()
